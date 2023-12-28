@@ -22,3 +22,12 @@ variable "preferred_number_of_private_subnets" {
     default = null
   
 }
+
+variable "tags" {
+    description = "A mapping to assign to all resources"
+    type = map(string)
+    default = {
+      "name" = "value"
+    }
+  
+}
