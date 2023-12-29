@@ -7,14 +7,14 @@ resource "aws_lb" "ext-alb" {
 
 
   subnets = [
-    aws_subnet.public[0].id,
-    aws_subnet.public[1].id
+    aws_subnet.public_subnet[0].id,
+    aws_subnet.public_subnet[1].id
   ]
   enable_deletion_protection = true
 
 
 
-   tags = merge(
+  tags = merge(
     var.tags,
     {
       Name = "ACS-ext-alb"
@@ -25,7 +25,7 @@ resource "aws_lb" "ext-alb" {
   ip_address_type    = "ipv4"
   load_balancer_type = "application"
 }
-
+#Create Target Groups
 resource "aws_lb_target_group" "nginx-tgt" {
   health_check {
     interval            = 10
@@ -40,5 +40,146 @@ resource "aws_lb_target_group" "nginx-tgt" {
   protocol    = "HTTPS"
   target_type = "instance"
   vpc_id      = aws_vpc.main.id
+}
+#add Listner to the Nginx LB 
+
+resource "aws_lb_listener" "nginx-listner" {
+  load_balancer_arn = aws_lb.ext-alb.arn
+  port              = 443
+  protocol          = "HTTPS"
+  certificate_arn   = aws_acm_certificate_validation.kipkulei_space.certificate_arn
+
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.nginx-tgt.arn
+  }
+}
+
+
+#Output DNS NAME and Target_Grouparn 
+output "alb_dns_name" {
+  value = aws_lb.ext-alb.dns_name
+}
+
+
+output "alb_target_group_arn" {
+  value = aws_lb_target_group.nginx-tgt.arn
+}
+
+
+# ----------------------------
+#Internal Load Balancers for webservers
+#---------------------------------
+
+
+resource "aws_lb" "ialb" {
+  name     = "ialb"
+  internal = true
+  security_groups = [
+    aws_security_group.int-alb-sg.id,
+  ]
+
+
+  subnets = [
+    aws_subnet.private_subnet[0].id,
+    aws_subnet.private_subnet[1].id
+  ]
+
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "Dev-int-alb"
+    },
+  )
+
+
+  ip_address_type    = "ipv4"
+  load_balancer_type = "application"
+}
+
+
+# --- target group  for wordpress -------
+
+
+resource "aws_lb_target_group" "wordpress-tgt" {
+  health_check {
+    interval            = 10
+    path                = "/healthstatus"
+    protocol            = "HTTPS"
+    timeout             = 5
+    healthy_threshold   = 5
+    unhealthy_threshold = 2
+  }
+
+
+  name        = "wordpress-tgt"
+  port        = 443
+  protocol    = "HTTPS"
+  target_type = "instance"
+  vpc_id      = aws_vpc.main.id
+}
+
+
+# --- target group for tooling -------
+
+
+resource "aws_lb_target_group" "tooling-tgt" {
+  health_check {
+    interval            = 10
+    path                = "/healthstatus"
+    protocol            = "HTTPS"
+    timeout             = 5
+    healthy_threshold   = 5
+    unhealthy_threshold = 2
+  }
+
+
+  name        = "tooling-tgt"
+  port        = 443
+  protocol    = "HTTPS"
+  target_type = "instance"
+  vpc_id      = aws_vpc.main.id
+}
+
+
+# For this aspect a single listener was created for the wordpress which is default,
+# A rule was created to route traffic to tooling when the host header changes
+
+
+resource "aws_lb_listener" "web-listener" {
+  load_balancer_arn = aws_lb.ialb.arn
+  port              = 443
+  protocol          = "HTTPS"
+  certificate_arn   = aws_acm_certificate_validation.kipkulei_space.certificate_arn
+
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.wordpress-tgt.arn
+  }
+}
+
+
+# listener rule for tooling target
+
+
+resource "aws_lb_listener_rule" "tooling-listener" {
+  listener_arn = aws_lb_listener.web-listener.arn
+  priority     = 99
+
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tooling-tgt.arn
+  }
+
+
+  condition {
+    host_header {
+      values = ["tooling.dev.kipkulei.space"]
+    }
+  }
 }
 
