@@ -27,7 +27,7 @@ resource "aws_subnet" "public_subnet" {
 
     tags = merge(var.tags, 
     {
-       name = "public-subnet - ${count.index +1}"
+       name =format( "publicSubnet -%S", count.index)
     })
     }
 
@@ -47,19 +47,6 @@ resource "aws_subnet" "private_subnet" {
     })
 
 }
-
-resource "aws_internet_gateway" "ig" {
-  vpc_id = aws_vpc.main.id
-
-
-  tags = merge(
-    var.tags,
-    {
-      Name = format("%s-%s!", aws_vpc.main.id,"IG")
-    } 
-  )
-}
-
 
 
 
