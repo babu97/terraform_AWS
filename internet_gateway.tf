@@ -6,7 +6,7 @@ resource "aws_internet_gateway" "ig" {
   tags = merge(
     var.tags,
     {
-      Name = format("%s-%s!", aws_vpc.main.id,"IG")
-    } 
+      Name = format("%s-%s!", aws_vpc.main.id, "IG")
+    }
   )
 }
