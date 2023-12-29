@@ -31,7 +31,7 @@ resource "aws_security_group" "ext-alb-sg" {
   }
 
 
- tags = merge(
+  tags = merge(
     var.tags,
     {
       Name = "ext-alb-sg"
@@ -45,7 +45,7 @@ resource "aws_security_group" "ext-alb-sg" {
 # security group for bastion, to allow access into the bastion host from you IP
 resource "aws_security_group" "bastion_sg" {
   name        = "vpc_web_sg"
-  vpc_id = aws_vpc.main.id
+  vpc_id      = aws_vpc.main.id
   description = "Allow incoming HTTP connections."
 
 
@@ -54,7 +54,7 @@ resource "aws_security_group" "bastion_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 
@@ -66,7 +66,7 @@ resource "aws_security_group" "bastion_sg" {
   }
 
 
-   tags = merge(
+  tags = merge(
     var.tags,
     {
       Name = "Bastion-SG"
@@ -89,7 +89,7 @@ resource "aws_security_group" "nginx-sg" {
   }
 
 
-   tags = merge(
+  tags = merge(
     var.tags,
     {
       Name = "nginx-SG"
@@ -212,7 +212,7 @@ resource "aws_security_group" "datalayer-sg" {
   }
 
 
- tags = merge(
+  tags = merge(
     var.tags,
     {
       Name = "datalayer-sg"
