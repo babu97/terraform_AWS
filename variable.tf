@@ -16,10 +16,10 @@ variable "enable_dns_hostnames" {
 }
 
 variable "preferred_number_of_public_subnets" {
-  default = null
+  default = "2"
 }
 variable "preferred_number_of_private_subnets" {
-  default = null
+  default = "4"
 
 }
 
@@ -40,7 +40,7 @@ variable "name" {
 
 variable "ami" {
   type    = string
-  default = "DEV"
+  default = "ami-0b0af3577fe5e3532"
 
 }
 
@@ -48,7 +48,21 @@ variable "ami" {
 variable "keypair" {
   
   type = string
-  default = "Dev"
-  
+
+}
+
+variable "account_no" {
+  type        = number
+  description = "the account number"
+}
+
+variable "master-username" {
+  type        = string
+  description = "RDS admin username"
+}
+
+variable "master-password" {
+  type        = string
+  description = "RDS master password"
 }
 
