@@ -11,7 +11,7 @@ resource "aws_vpc" "main" {
 
   tags = merge(var.tags,
     {
-      name = "dev vpc"
+      name = format("%s-VPC", var.name)
   })
 
 }
