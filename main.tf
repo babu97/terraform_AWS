@@ -27,7 +27,7 @@ resource "aws_subnet" "public_subnet" {
 
   tags = merge(var.tags,
     {
-      name = format("publicSubnet -%s", count.index)
+      name = format("%s- publicSubnet -%s",var.name, count.index)
   })
 }
 
@@ -37,13 +37,13 @@ resource "aws_subnet" "public_subnet" {
 resource "aws_subnet" "private_subnet" {
   count                   = var.preferred_number_of_private_subnets == null ? length(data.aws_availability_zones.available.names) : var.preferred_number_of_private_subnets
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = cidrsubnet(var.vpc_cidr, 5, count.index)
+  cidr_block              = cidrsubnet(var.vpc_cidr, 5, count.index+2)
   map_public_ip_on_launch = false
   availability_zone       = data.aws_availability_zones.available.names[count.index]
 
   tags = merge(var.tags,
     {
-      name = format("privateSubnet-%s", count.index)
+      name = format("%s-privateSubnet-%s",var.name, count.index)
   })
 
 }

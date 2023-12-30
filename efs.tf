@@ -113,7 +113,7 @@ resource "aws_efs_access_point" "tooling" {
 
 # This section will create the subnet group for the RDS  instance using the private subnet
 resource "aws_db_subnet_group" "dev-rds" {
-  name       = "${var.name}-rds"
+  name       = "dev-rds"
   subnet_ids = [aws_subnet.private_subnet[2].id, aws_subnet.private_subnet[3].id]
 
 

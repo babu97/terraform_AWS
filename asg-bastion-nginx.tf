@@ -18,7 +18,7 @@ resource "aws_autoscaling_notification" "ben_notifications" {
   ]
 
 
-  topic_arn = aws_sns_topic.ben-sns.arn
+  topic_arn = aws_sns_topic.Ben-sns.arn
 }
 
 
@@ -151,8 +151,8 @@ resource "aws_autoscaling_group" "nginx-asg" {
 
 
   vpc_zone_identifier = [
-    aws_subnet.public[0].id,
-    aws_subnet.public[1].id
+    aws_subnet.public_subnet[0].id,
+    aws_subnet.public_subnet[1].id
   ]
 
 
