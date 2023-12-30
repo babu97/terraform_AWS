@@ -46,7 +46,7 @@ variable "ami" {
 
 
 variable "keypair" {
-  
+
   type = string
 
 }
@@ -67,3 +67,7 @@ variable "master-password" {
 }
 
 
+variable "enable_deletion_protection" {
+  type        = bool
+  description = "control when to delete LB"
+}

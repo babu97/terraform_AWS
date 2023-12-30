@@ -10,7 +10,7 @@ resource "aws_lb" "ext-alb" {
     aws_subnet.public_subnet[0].id,
     aws_subnet.public_subnet[1].id
   ]
-  enable_deletion_protection = true
+  #enable_deletion_protection = var.enable_deletion_protection
 
 
 
