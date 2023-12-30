@@ -37,3 +37,18 @@ variable "name" {
   default = "DEV"
 
 }
+
+variable "ami" {
+  type    = string
+  default = "DEV"
+
+}
+
+
+variable "keypair" {
+  
+  type = string
+  default = "Dev"
+  
+}
+
