@@ -2,26 +2,7 @@ variable "region" {
 
   default = "eu-central-1"
 }
-variable "vpc_cidr" {
-  default = "172.16.0.0/16"
 
-}
-variable "enable_dns_support" {
-  default = "true"
-
-}
-variable "enable_dns_hostnames" {
-  default = "true"
-
-}
-
-variable "preferred_number_of_public_subnets" {
-  default = "2"
-}
-variable "preferred_number_of_private_subnets" {
-  default = "4"
-
-}
 
 variable "tags" {
   description = "A mapping to assign to all resources"
@@ -38,23 +19,39 @@ variable "name" {
 
 }
 
-variable "ami" {
-  type    = string
-  default = "ami-0b0af3577fe5e3532"
 
+
+
+
+variable "enable_deletion_protection" {
+  type        = bool
+  description = "control when to delete LB"
 }
 
+variable "preferred_number_of_public_subnets" {
+  type    = number
+  default = 2
+}
 
-variable "keypair" {
+variable "preferred_number_of_private_subnets" {
+  type    = number
+  default = 4
+}
 
+variable "enable_dns_hostnames" {
+  type    = bool
+  default = true
+}
+
+variable "enable_dns_support" {
+  type    = bool
+  default = true
+}
+
+variable "vpc_cidr" {
   type = string
-
 }
 
-variable "account_no" {
-  type        = number
-  description = "the account number"
-}
 
 variable "master-username" {
   type        = string
@@ -67,7 +64,24 @@ variable "master-password" {
 }
 
 
-variable "enable_deletion_protection" {
-  type        = bool
-  description = "control when to delete LB"
+variable "account_no" {
+  type        = number
+  description = "the account number"
 }
+
+variable "ami" {
+  type    = string
+  default = "ami-0b0af3577fe5e3532"
+
+}
+
+variable "keypair" {
+
+  type = string
+
+}
+
+# variable "vpc_id" {
+#   type        = string
+#   description = "The vpc ID"
+# }
