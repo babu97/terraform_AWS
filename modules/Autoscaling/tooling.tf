@@ -55,7 +55,7 @@ resource "aws_autoscaling_group" "tooling-asg" {
 
 
   vpc_zone_identifier = var.private_subnets
-  
+
 
 
   launch_template {

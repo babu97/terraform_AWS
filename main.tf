@@ -8,8 +8,8 @@ module "VPC" {
   enable_dns_hostnames                = var.enable_dns_hostnames
   preferred_number_of_public_subnets  = var.preferred_number_of_public_subnets
   preferred_number_of_private_subnets = var.preferred_number_of_private_subnets
-  private_subnets = [for i in range(1, 8, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
-  public_subnets = [for i in range(2, 5, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
+  private_subnets                     = [for i in range(1, 8, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
+  public_subnets                      = [for i in range(2, 5, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
 }
 
 module "security" {
@@ -17,7 +17,7 @@ module "security" {
   tags   = var.tags
   name   = var.name
   vpc_id = module.VPC.vpc_id
-  
+
 
 
 }
@@ -27,59 +27,59 @@ module "RDS" {
   name            = var.name
   master-password = var.master-password
   master-username = var.master-password
-  db-sg = module.security.datalayer-sg
-  private_subnets = [module.VPC.private_subnets-3,module.VPC.private_subnets-4]
+  db-sg           = module.security.datalayer-sg
+  private_subnets = [module.VPC.private_subnets-3, module.VPC.private_subnets-4]
 
 }
 
 module "EFS" {
-  source     = "./modules/EFS"
-  name       = var.name
-  tags       = var.tags
-  account_no = var.account_no
-  efs-subnet-1 = module.VPC.private_subnets-1 
+  source       = "./modules/EFS"
+  name         = var.name
+  tags         = var.tags
+  account_no   = var.account_no
+  efs-subnet-1 = module.VPC.private_subnets-1
   efs-subnet-2 = module.VPC.private_subnets-2
-  efs-sg =  [module.security.datalayer-sg]
+  efs-sg       = [module.security.datalayer-sg]
 
 }
 
 module "Autoscaling" {
-  source  = "./modules/Autoscaling"
-  keypair = var.keypair
-  tags = var.tags
-  name = "DEV"
-  ami-web = var.ami
-  instance_profile = module.VPC.instance_profile
-  ami-bastion = var.ami
-  web-sg = [module.security.web-sg] 
-  bastion-sg = [module.security.bastion-sg]
-  nginx-sg =  [module.security.nginx-sg]
-  private_subnets = [module.VPC.private_subnets-1,module.VPC.private_subnets-2]
-  public_subnets =  [module.VPC.public_subnets-1, module.VPC.public_subnets-2]
-  ami-nginx =  var.ami
-  nginx-alb-tgt =  module.ALB.nginx-tgt
+  source            = "./modules/Autoscaling"
+  keypair           = var.keypair
+  tags              = var.tags
+  name              = "DEV"
+  ami-web           = var.ami
+  instance_profile  = module.VPC.instance_profile
+  ami-bastion       = var.ami
+  web-sg            = [module.security.web-sg]
+  bastion-sg        = [module.security.bastion-sg]
+  nginx-sg          = [module.security.nginx-sg]
+  private_subnets   = [module.VPC.private_subnets-1, module.VPC.private_subnets-2]
+  public_subnets    = [module.VPC.public_subnets-1, module.VPC.public_subnets-2]
+  ami-nginx         = var.ami
+  nginx-alb-tgt     = module.ALB.nginx-tgt
   wordpress-alb-tgt = module.ALB.wordpress-tgt
-  tooling-alb-tgt =  module.ALB.tooling-tgt
-  max_size =  2
-  min_size =  2
-  desired_capacity =2  
+  tooling-alb-tgt   = module.ALB.tooling-tgt
+  max_size          = 2
+  min_size          = 2
+  desired_capacity  = 2
 
 
 
 }
 
-module "ALB"{
-  source = "./modules/ALB"
-  name = "dev-ext-alb"
+module "ALB" {
+  source             = "./modules/ALB"
+  name               = "dev-ext-alb"
   public-sg          = module.security.ALB-sg
   private-sg         = module.security.IALB-sg
   public-sbn-1       = module.VPC.public_subnets-1
   public-sbn-2       = module.VPC.public_subnets-2
   private-sbn-1      = module.VPC.private_subnets-1
   private-sbn-2      = module.VPC.private_subnets-2
-  ip_address_type = "ipv4"
-  vpc_id =module.VPC.vpc_id
+  ip_address_type    = "ipv4"
+  vpc_id             = module.VPC.vpc_id
   load_balancer_type = "application"
- 
-  
+
+
 }

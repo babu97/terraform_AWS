@@ -23,8 +23,8 @@ output "nginx-tgt" {
 }
 output "tooling-tgt" {
   description = "Tooling target group"
-  value =aws_lb_target_group.tooling-tgt.arn
-  
+  value       = aws_lb_target_group.tooling-tgt.arn
+
 }
 output "wordpress-tgt" {
   description = "wordpress target group"

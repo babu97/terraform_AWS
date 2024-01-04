@@ -7,7 +7,7 @@ resource "aws_lb" "ext-alb" {
 
 
   subnets = [
-    var.public-sbn-1,var.private-sbn-2
+    var.public-sbn-1, var.private-sbn-2
   ]
   #enable_deletion_protection = var.enable_deletion_protection
 
