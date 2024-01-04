@@ -40,3 +40,14 @@ variable "preferred_number_of_private_subnets" {
   type    = number
   default = 4
 }
+
+variable "private_subnets"{
+  type = list
+  description = "list of private subnets"
+}
+
+variable "public_subnets"{
+
+  type = list
+  description = "List of public subnets"
+}
