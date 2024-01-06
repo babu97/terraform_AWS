@@ -89,15 +89,15 @@ module "Autoscaling" {
   keypair           = var.keypair
   tags              = var.tags
   name              = "DEV"
-  ami-web           = var.ami
+  ami-web           = var.ami-web
   instance_profile  = module.VPC.instance_profile
-  ami-bastion       = var.ami
+  ami-bastion       = var.ami-bastion
   web-sg            = [module.security.web-sg]
   bastion-sg        = [module.security.bastion-sg]
   nginx-sg          = [module.security.nginx-sg]
   private_subnets   = [module.VPC.private_subnets-1, module.VPC.private_subnets-2]
   public_subnets    = [module.VPC.public_subnets-1, module.VPC.public_subnets-2]
-  ami-nginx         = var.ami
+  ami-nginx         = var.ami-nginx
   nginx-alb-tgt     = module.ALB.nginx-tgt
   wordpress-alb-tgt = module.ALB.wordpress-tgt
   tooling-alb-tgt   = module.ALB.tooling-tgt
@@ -127,9 +127,9 @@ module "ALB" {
 
 module "compute" {
   source          = "./modules/compute"
-  ami-jenkins     = var.ami
-  ami-sonar       = var.ami
-  ami-jfrog       = var.ami
+  ami-jenkins     = var.ami-bastion
+  ami-sonar       = var.ami-sonar
+  ami-jfrog       = var.ami-bastion
   subnets-compute = module.VPC.public_subnets-1
   sg-compute      = [module.security.ALB-sg]
   keypair         = var.keypair

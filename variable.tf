@@ -75,6 +75,29 @@ variable "ami" {
 
 }
 
+variable "ami-web" {
+  type        = string
+  description = "Required AMI images"
+
+}
+variable "ami-nginx" {
+  type        = string
+  description = "Required AMI images"
+
+}
+
+variable "ami-bastion" {
+  type        = string
+  description = "Required AMI images"
+
+}
+
+variable "ami-sonar" {
+  type        = string
+  description = "Required AMI images"
+
+}
+
 variable "keypair" {
 
   type = string
