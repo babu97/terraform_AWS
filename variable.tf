@@ -70,8 +70,8 @@ variable "account_no" {
 }
 
 variable "ami" {
-  type    = string
-  default = "ami-0b0af3577fe5e3532"
+  type        = string
+  description = "Required AMI images"
 
 }
 
@@ -81,7 +81,4 @@ variable "keypair" {
 
 }
 
-# variable "vpc_id" {
-#   type        = string
-#   description = "The vpc ID"
-# }
+

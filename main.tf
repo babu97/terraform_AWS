@@ -1,17 +1,22 @@
-# Note: The bucket name may not work for you since buckets are unique globally in AWS, so you must give it a unique name.
+# Note: The bucket name must be unique globally in AWS.
+# S3 bucket resource
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "dev-terraform-bucket-sai"
-  # Enable versioning so we can see the full revision history of our state files
+  bucket        = "dev-terraform-bucket-sai" # Change to your desired unique bucket name
+  force_destroy = true
 
+  # (Optional) Add additional bucket configurations if needed
 }
 
+# Enable versioning for the S3 bucket
 resource "aws_s3_bucket_versioning" "terraform_versioning" {
-
   bucket = aws_s3_bucket.terraform_state.id
+
   versioning_configuration {
     status = "Enabled"
   }
 }
+
+# Enable server-side encryption for the S3 bucket
 resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_encryption" {
   bucket = aws_s3_bucket.terraform_state.id
 
@@ -21,6 +26,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_encrypt
     }
   }
 }
+
 
 
 resource "aws_dynamodb_table" "terraform_locks" {
@@ -62,7 +68,7 @@ module "RDS" {
   name            = var.name
   master-password = var.master-password
   master-username = var.master-password
-  db-sg           = module.security.datalayer-sg
+  db-sg           = [module.security.datalayer-sg]
   private_subnets = [module.VPC.private_subnets-3, module.VPC.private_subnets-4]
 
 }
@@ -95,9 +101,9 @@ module "Autoscaling" {
   nginx-alb-tgt     = module.ALB.nginx-tgt
   wordpress-alb-tgt = module.ALB.wordpress-tgt
   tooling-alb-tgt   = module.ALB.tooling-tgt
-  max_size          = 2
-  min_size          = 2
-  desired_capacity  = 2
+  max_size          = 3
+  min_size          = 1
+  desired_capacity  = 1
 
 
 
@@ -117,4 +123,14 @@ module "ALB" {
   load_balancer_type = "application"
 
 
+}
+
+module "compute" {
+  source          = "./modules/compute"
+  ami-jenkins     = var.ami
+  ami-sonar       = var.ami
+  ami-jfrog       = var.ami
+  subnets-compute = module.VPC.public_subnets-1
+  sg-compute      = [module.security.ALB-sg]
+  keypair         = var.keypair
 }

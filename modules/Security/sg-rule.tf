@@ -49,7 +49,7 @@ resource "aws_security_group_rule" "inbound-web-ssh" {
   from_port                = 22
   to_port                  = 22
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.DEV["bastion_sg"].id
+  source_security_group_id = aws_security_group.DEV["bastion-sg"].id
   security_group_id        = aws_security_group.DEV["webserver-sg"].id
 }
 
@@ -70,7 +70,7 @@ resource "aws_security_group_rule" "inbound-mysql-bastion" {
   from_port                = 3306
   to_port                  = 3306
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.DEV["bastion_sg"].id
+  source_security_group_id = aws_security_group.DEV["bastion-sg"].id
   security_group_id        = aws_security_group.DEV["datalayer-sg"].id
 }
 

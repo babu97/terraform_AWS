@@ -10,7 +10,7 @@ output "IALB-sg" {
 
 
 output "bastion-sg" {
- value = aws_security_group.DEV["bastion_sg"].id
+ value = aws_security_group.DEV["bastion-sg"].id
 
 }
 
