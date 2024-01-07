@@ -28,3 +28,8 @@ output "web-sg" {
 output "datalayer-sg" {
   value = aws_security_group.DEV["datalayer-sg"].id
 }
+
+
+output "compute-sg" {
+  value = aws_security_group.DEV["compute-sg"].id
+}
