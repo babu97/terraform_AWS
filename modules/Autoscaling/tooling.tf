@@ -30,7 +30,7 @@ resource "aws_launch_template" "tooling-launch-template" {
     tags = merge(
       var.tags,
       {
-        Name = "tooling-launch-template"
+        Name = "DEV-tooling"
       },
     )
 

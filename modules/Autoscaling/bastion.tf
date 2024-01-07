@@ -33,7 +33,7 @@ resource "aws_launch_template" "bastion-launch-template" {
     tags = merge(
       var.tags,
       {
-        Name = "bastion-launch-template"
+        Name = "DEV-bastion"
       },
     )
   }
@@ -62,7 +62,7 @@ resource "aws_autoscaling_group" "bastion-asg" {
   }
   tag {
     key                 = "Name"
-    value               = "Dev-bastion-launch-template"
+    value               = "DEV-bastion"
     propagate_at_launch = true
   }
   
