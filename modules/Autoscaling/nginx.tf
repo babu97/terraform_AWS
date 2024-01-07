@@ -64,7 +64,7 @@ resource "aws_autoscaling_group" "nginx-asg" {
 
   tag {
     key                 = "Name"
-    value               = "nginx-launch-template"
+    value               = "DEV-nginx"
     propagate_at_launch = true
   }
 

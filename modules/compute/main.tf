@@ -10,7 +10,7 @@ resource "aws_instance" "Jenkins" {
  tags = merge(
     var.tags,
     {
-      Name = "ACS-Jenkins"
+      Name = "Dev-Jenkins"
     },
   )
 }
@@ -29,7 +29,7 @@ resource "aws_instance" "sonbarqube" {
    tags = merge(
     var.tags,
     {
-      Name = "ACS-sonbarqube"
+      Name = "DEV-sonbarqube"
     },
   )
 }
@@ -47,7 +47,7 @@ resource "aws_instance" "artifactory" {
   tags = merge(
     var.tags,
     {
-      Name = "dev-artifactory"
+      Name = "DEV-artifactory"
     },
   )
 }

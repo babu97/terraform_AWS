@@ -62,9 +62,10 @@ resource "aws_autoscaling_group" "bastion-asg" {
   }
   tag {
     key                 = "Name"
-    value               = "bastion-launch-template"
+    value               = "Dev-bastion-launch-template"
     propagate_at_launch = true
   }
+  
 
 
 }

@@ -32,7 +32,7 @@ resource "aws_launch_template" "wordpress-launch-template" {
     tags = merge(
       var.tags,
       {
-        Name = "wordpress-launch-template"
+        Name = "DEV-wordpress"
       },
     )
 
@@ -64,7 +64,7 @@ resource "aws_autoscaling_group" "wordpress-asg" {
   }
   tag {
     key                 = "Name"
-    value               = "wordpress-asg"
+    value               = "Dev-wordpress-asg"
     propagate_at_launch = true
   }
 }

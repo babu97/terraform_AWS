@@ -66,7 +66,7 @@ resource "aws_autoscaling_group" "tooling-asg" {
 
   tag {
     key                 = "Name"
-    value               = "tooling-launch-template"
+    value               = "DEV-tooling"
     propagate_at_launch = true
   }
 }
