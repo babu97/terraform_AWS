@@ -69,12 +69,6 @@ variable "account_no" {
   description = "the account number"
 }
 
-variable "ami" {
-  type        = string
-  description = "Required AMI images"
-
-}
-
 variable "ami-web" {
   type        = string
   description = "Required AMI images"
