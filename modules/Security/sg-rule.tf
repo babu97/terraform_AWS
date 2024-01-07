@@ -151,32 +151,6 @@ resource "aws_security_group_rule" "inbound-mysql-webserver" {
   source_security_group_id = aws_security_group.DEV["webserver-sg"].id
   security_group_id        = aws_security_group.DEV["datalayer-sg"].id
 }
-resource "aws_security_group_rule" "inbound-port-artifcatory" {
-  from_port         = 8081
-  protocol          = "tcp"
-  to_port           = 8081
-  type              = "ingress"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.DEV["compute-sg"].id
-}
-
-resource "aws_security_group_rule" "inbound-port-jenkins" {
-  from_port         = 8080
-  protocol          = "tcp"
-  to_port           = 8080
-  type              = "ingress"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.DEV["compute-sg"].id
-}
-
-resource "aws_security_group_rule" "inbound-port-sonarqube" {
-  from_port         = 9000
-  protocol          = "tcp"
-  to_port           = 9000
-  type              = "ingress"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.DEV["ext-alb-sg"].id
-}
 
 
 
