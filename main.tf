@@ -87,7 +87,6 @@ module "EFS" {
 module "Autoscaling" {
   source            = "./modules/Autoscaling"
   keypair           = var.keypair
-  tags              = var.tags
   name              = "DEV"
   ami-web           = var.ami-web
   instance_profile  = module.VPC.instance_profile
