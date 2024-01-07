@@ -27,8 +27,8 @@ master-password            = "Kipkulei123"
 keypair                    = "kevin"
 enable_deletion_protection = false
 
-ami-nginx = "	ami-0f678d6b7d76000ac"
+ami-nginx = "ami-0f678d6b7d76000ac"
 ami-bastion = "ami-084e7ee4fab796cb5"
-ami-web = "	ami-021adf4372a674db1"
+ami-web = "ami-021adf4372a674db1"
 ami-sonar = "ami-07c3341c8109a24b3"
 
