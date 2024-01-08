@@ -26,8 +26,8 @@ resource "aws_db_instance" "dev-rds" {
   engine_version         = "5.7"
   instance_class         = "db.t2.micro"
   db_name                = "dev"
-  username               = var.master-username
-  password               = var.master-password
+  username               = "admin"
+  password               = "kipkulei123"
   parameter_group_name   = "default.mysql5.7"
   db_subnet_group_name   = aws_db_subnet_group.dev-rds.name
   skip_final_snapshot    = true
