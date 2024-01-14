@@ -1,0 +1,108 @@
+# we are going to implement this architecture using  this tools
+- [terraform](https://www.terraform.io/) -check the Terraform documentation 
+- [ansible](https://www.ansible.com/) - we will use Ansible for configuration Management 
+- [Packer](https://www.packer.io/) - we will use Packer to build the AMI  images 
+
+# Not included in this scope but nice to have 
+
+-  HashiCorp Vault 
+
+
+kindly never use this in production its for learning purposes. All the terraform  modules are custom 
+made and not tested, I recommend using open source modules  at  https://registry.terraform.io/browse/modules for Production 
+
+
+Also note implementing this project is costly and is not covered by free tier. Its best to implement this 
+project continously  without stopping.
+
+
+![](tooling_project_15.png)
+
+
+1. Git clone this repository 
+
+2. Make sure you set ans AWS CLI on your Host  - check from the documentation  -https://aws.amazon.com/cli/
+
+3. Login to you to AWS console and go to IAM and generate AWS  access Keys  - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
+
+
+4. Initiate `aws configure ` from  the terminal  and you will be prompted to put ACCESS ID and ACCESS KEY and default region - watch this 
+youtube tutorial - https://www.youtube.com/watch?v=N7MgJYlJd7M&ab_channel=KeidrickPettaway 
+
+5. Try implement the project manually first by  referring to the diagram above it will really come in Handy before automating 
+it with terraform 
+
+## Packer Images 
+Kindly note we have to build the images we are using for this Project be sure to check 
+this repository to check the packer code for buidling all the images we require for this
+Project.
+
+Learn about Packer Images Here - https://www.packer.io/
+
+
+
+https://github.com/babu97/AMI.git
+
+Replace all the Ami  accordingly on the terraform code 
+if we are  are using Ubuntu AMI be sure  copy and replace 
+
+## Setup your Domain 
+
+Ensure you have create a hosted Zone in AWS Route 53 Before spinning running the terraform 
+code. 
+get free domain at -freenom 
+
+watch this tutorial to know how  - https://dev.to/omarcloud20/how-to-create-a-free-custom-domain-name-for-your-lambda-url-a-step-by-step-tutorial-47jl
+
+
+
+## Terraform 
+ 
+ 1. Setup Terraform in your system watch this tutorial -  https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+
+ 2. Ensure you already know terraform basics before proceeding , you can learn terraform from youtube tutorials or 
+ Udemy videos.
+
+3. setup Terraform cloud as we are going to  run this project from the terraform console  - https://app.terraform.io/
+
+4. Create  a  terraform workspace  
+
+5. Ensure you have Pushed your project to GitHub  - watch this tutorial to learn how to setup 
+terraform cloud  wordspace - https://www.youtube.com/watch?v=m3PlM4erixY&t=287s&ab_channel=NedintheCloud
+
+6.Import your repository to your cloud 
+
+7. Setup Terraform Variables ensure you have defined your AWS  access ID and Key in Enviromental variables 
+
+8. if everything is succesful you should be seeing something like this  
+
+![](cloud.png)
+
+9. Iniate Terraform apply from the cloud  be sure to check the resources that will be created  and give
+and approval. 
+
+
+## Ansible 
+
+check this Repository  for the Ansible code  we are going to use  in this 
+project  -https://github.com/babu97/ansible-prj19.git
+
+
+Kindly note we are using Ansible  dynamic  ec2 host to  get all the ip address
+of servers that we want to configure.
+Ensure to  SSH into the Bation Host  and run this Ansible Script. 
+It will automate  all the deployments  if Eveything is succesful it
+
+should setup Everything.
+
+
+
+
+
+
+
+
+
+
+
+
