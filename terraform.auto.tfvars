@@ -14,17 +14,17 @@ preferred_number_of_public_subnets  = 2
 preferred_number_of_private_subnets = 4
 
 tags = {
-  Enviroment      = "Dev"
-  Owner-Email     = "kelvinkiprop@gmail.com"
-  Managed-By      = "kevin"
-  Billing-Account = "254204724488"
+  Enviroment      = ""
+  Owner-Email     = ""
+  Managed-By      = ""
+  Billing-Account = ""
 }
 
 account_no = 932861452532
 
-master-username            = "admin"
-master-password            = "Kipkulei123"
-keypair                    = "kevin"
+master-username            = ""
+master-password            = ""
+keypair                    = ""
 enable_deletion_protection = false
 
 ami-nginx = "ami-0f678d6b7d76000ac"
